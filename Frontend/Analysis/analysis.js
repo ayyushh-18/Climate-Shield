@@ -49,7 +49,6 @@ async function getWeatherData() {
     analyzeBtn.disabled = true;
     analyzeBtn.textContent = 'Analyzing...';
 
-
     hideMessage();
     results.classList.add('hidden');
     results.classList.remove('is-visible');
@@ -64,6 +63,10 @@ async function getWeatherData() {
             },
             body: JSON.stringify({ city, state, country })
         });
+
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status} ${response.statusText}`);
+        }
 
         const data = await response.json();
         loading.classList.add('hidden');
@@ -343,7 +346,7 @@ async function getWeatherData() {
         console.error(error);
         loading.classList.add('hidden');
         analyzeBtn.disabled = false;
-       analyzeBtn.textContent = 'Analyze Climate Risk';
+        analyzeBtn.textContent = 'Analyze Climate Risk';
 
         showMessage(
             'Backend server is not running.',
@@ -351,21 +354,16 @@ async function getWeatherData() {
         );
     }
 }
+
 function clearResults() {
-
     document.getElementById('city').value = '';
-
     document.getElementById('state').value = '';
-
     document.getElementById('country').value = '';
-
     document.getElementById('results').classList.add('hidden');
-
     document.getElementById('alert-box').classList.add('hidden');
-
     document.getElementById('message-box').classList.add('hidden');
 }
-       
+
 // Handle alert subscription simulation
 document.addEventListener('DOMContentLoaded', () => {
     const subForm = document.getElementById('subscribe-form');
@@ -375,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const successMsg = document.getElementById('subscribe-success');
             successMsg.classList.remove('hidden');
             document.getElementById('subscribe-email').value = '';
-            
+
             // Add a entry to logs
             const dispatchLogsBox = document.getElementById('dispatch-logs-box');
             if (dispatchLogsBox) {
@@ -386,7 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 dispatchLogsBox.appendChild(entry);
                 dispatchLogsBox.scrollTop = dispatchLogsBox.scrollHeight;
             }
-            
+
             setTimeout(() => {
                 successMsg.classList.add('hidden');
             }, 4000);

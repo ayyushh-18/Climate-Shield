@@ -230,17 +230,25 @@ body::before {
 }
 
 .mini-stats div {
-  padding: 18px 16px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
+    padding: 18px 16px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mini-stats div:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 28px rgba(56, 189, 248, 0.2);
 }
 
 .mini-stats strong {
-  display: block;
-  font-size: 1.15rem;
-  margin-bottom: 6px;
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 6px;
 }
 
 .mini-stats span {
@@ -293,16 +301,25 @@ body::before {
 }
 
 .analysis-intro-meta div {
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.analysis-intro-meta div:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 28px rgba(56, 189, 248, 0.2);
 }
 
 .analysis-intro-meta strong {
-  display: block;
-  margin-bottom: 6px;
-  color: #7dd3fc;
+    display: block;
+    margin-bottom: 6px;
+    color: #7dd3fc;
+    font-size: 1.05rem;
+    font-weight: 700;
 }
 
 .analysis-intro-meta span {

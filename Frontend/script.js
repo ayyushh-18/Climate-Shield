@@ -1,8 +1,8 @@
 // ==========================================
 // FIX FOR ISSUE #86: Leaflet Theme Switcher
 // ==========================================
-const LIGHT_TILE_URL = 'https://{s}://{z}/{x}/{y}{r}.png';
-const DARK_TILE_URL = 'https://{s}://{z}/{x}/{y}{r}.png';
+const LIGHT_TILE_URL = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+const DARK_TILE_URL = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
 const MAP_ATTRIBUTION = '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors &copy; <a href="https://carto.com">CARTO</a>';
 
 let globalActiveMapLayer = null;
@@ -192,11 +192,17 @@ function detectAnomalies(data, threshold = 2) {
     });
 }
 window.onload = function () {
+    const insightElement = document.getElementById("climate-insight");
+    const anomalyElement = document.getElementById("anomaly-result");
+
+    if (!insightElement || !anomalyElement) {
+        return;
+    }
 
     // 🌍 Climate Insight Demo
     const insight = generateClimateInsight(1.8, 1.2, "Andhra Pradesh");
 
-    document.getElementById("climate-insight").innerText = insight;
+    insightElement.innerText = insight;
 
     // 🚨 Anomaly Detection Demo
     const tempData = [28, 29, 30, 45, 31, 29];
@@ -205,7 +211,7 @@ window.onload = function () {
 
     const anomalies = results.filter(r => r.isAnomaly);
 
-    document.getElementById("anomaly-result").innerHTML =
+    anomalyElement.innerHTML =
         anomalies.length === 0
             ? "✅ No unusual climate spikes detected"
             : anomalies.map(a =>

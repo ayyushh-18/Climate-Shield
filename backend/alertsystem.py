@@ -116,22 +116,9 @@ def get_weather_insights():
         }), 200
 
     except Exception as general_err:
-        return jsonify({"success": False, "message": f"Server processing error: {str(general_err)}"}), 500
-
-
-    except Exception as e:
-
         print("Weather Route Error:")
-        print(str(e))
-
-        return jsonify({
-
-            "success": False,
-
-            "message":
-            "Internal server error."
-
-        })
+        print(str(general_err))
+        return jsonify({"success": False, "message": "Internal server error."}), 500
 
 @app.route("/reverse-geocode", methods=["POST"])
 def reverse_geocode():
@@ -295,5 +282,3 @@ if __name__ == "__main__":
         debug=True
 
     )
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)

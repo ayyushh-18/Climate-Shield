@@ -560,6 +560,8 @@ function getRecentSearches() {
 }
 
 function saveRecentSearch(city, state, country) {
+  if (!city || !state || !country) return;
+
   const newSearch = {
     city,
     state,
@@ -571,14 +573,13 @@ function saveRecentSearch(city, state, country) {
   searches = searches.filter(
     (search) =>
       !(
-        search.city === city &&
-        search.state === state &&
-        search.country === country
+        search.city.toLowerCase() === city.toLowerCase() &&
+        search.state.toLowerCase() === state.toLowerCase() &&
+        search.country.toLowerCase() === country.toLowerCase()
       ),
   );
 
   searches.unshift(newSearch);
-
   searches = searches.slice(0, 5);
 
   localStorage.setItem("recentSearches", JSON.stringify(searches));
@@ -589,9 +590,7 @@ function saveRecentSearch(city, state, country) {
 function displayRecentSearches() {
   const container = document.getElementById("recent-search-list");
 
-  if (!container) {
-    return;
-  }
+  if (!container) return;
 
   container.innerHTML = "";
 
@@ -616,31 +615,29 @@ function displayRecentSearches() {
   });
 }
 
-function setupRecentSearches() {
-  const clearHistoryBtn = document.getElementById("clear-history-btn");
-  const toggleHistoryBtn = document.getElementById("toggle-history-btn");
-  const recentSearchWrapper = document.getElementById("recent-search-wrapper");
+document.addEventListener("DOMContentLoaded", () => {
+  displayRecentSearches();
 
-  if (clearHistoryBtn) {
-    clearHistoryBtn.addEventListener("click", () => {
-      localStorage.removeItem("recentSearches");
-      displayRecentSearches();
-    });
-  }
+  const toggleBtn = document.getElementById("toggle-history-btn");
+  const wrapper = document.getElementById("recent-search-wrapper");
+  const clearBtn = document.getElementById("clear-history-btn");
 
-  if (toggleHistoryBtn && recentSearchWrapper) {
-    toggleHistoryBtn.addEventListener("click", () => {
-      recentSearchWrapper.classList.toggle("show-history");
+  if (toggleBtn && wrapper) {
+    toggleBtn.addEventListener("click", () => {
+      wrapper.classList.toggle("show-history");
 
-      if (recentSearchWrapper.classList.contains("show-history")) {
-        toggleHistoryBtn.innerText = "Recent Searches ▲";
+      if (wrapper.classList.contains("show-history")) {
+        toggleBtn.innerText = "Recent Searches ▲";
       } else {
-        toggleHistoryBtn.innerText = "Recent Searches ▼";
+        toggleBtn.innerText = "Recent Searches ▼";
       }
     });
   }
 
-  displayRecentSearches();
-}
-
-document.addEventListener("DOMContentLoaded", setupRecentSearches);
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      localStorage.removeItem("recentSearches");
+      displayRecentSearches();
+    });
+  }
+});
